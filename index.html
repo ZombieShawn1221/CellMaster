@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>细胞主理人 - Cell Master</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- ==================== 登录界面 ==================== -->
+        <div id="login-screen" class="screen active">
+            <div class="login-container">
+                <div class="game-logo">
+                    <h1>🧫 细胞主理人</h1>
+                    <p class="subtitle">Cell Master</p>
+                    <p class="tagline">"又是被细胞支配的一天..."</p>
+                </div>
+
+                <div class="login-form">
+                    <div class="login-tabs">
+                        <button class="tab-btn active" data-tab="login">登录</button>
+                        <button class="tab-btn" data-tab="register">注册</button>
+                    </div>
+
+                    <!-- 登录表单 -->
+                    <div id="login-tab" class="tab-content active">
+                        <div class="form-group">
+                            <input type="text" id="login-username" placeholder="用户名">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="login-password" placeholder="密码">
+                        </div>
+                        <button class="btn-primary" id="btn-login">登录</button>
+                        <div class="divider"><span>或</span></div>
+                        <button class="btn-wechat" id="btn-wechat-login">
+                            <span class="wechat-icon">💚</span> 微信登录
+                        </button>
+                        <button class="btn-guest" id="btn-guest-login">游客模式</button>
+                    </div>
+
+                    <!-- 注册表单 -->
+                    <div id="register-tab" class="tab-content">
+                        <div class="form-group">
+                            <input type="text" id="reg-username" placeholder="用户名 (4-16字符)">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="reg-password" placeholder="密码 (6位以上)">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="reg-password2" placeholder="确认密码">
+                        </div>
+                        <button class="btn-primary" id="btn-register">注册</button>
+                    </div>
+                </div>
+
+                <p class="copyright">© 2024 细胞主理人 | 献给每一位实验室牛马</p>
+            </div>
+        </div>
+
+        <!-- ==================== 角色选择界面 ==================== -->
+        <div id="role-select-screen" class="screen">
+            <div class="role-container">
+                <h2>选择你期待的实验室</h2>
+                <p class="role-hint">选择一个你理想中的实验室配置...</p>
+
+                <div class="role-cards">
+                    <!-- 大户圈养组 -->
+                    <div class="role-card" data-role="rich">
+                        <div class="role-icon">🏛️</div>
+                        <h3>大户圈养组</h3>
+                        <div class="role-stats">
+                            <div class="stat"><span>经费</span><div class="stat-bar"><div style="width:90%"></div></div></div>
+                            <div class="stat"><span>培养位</span><div class="stat-bar"><div style="width:85%"></div></div></div>
+                            <div class="stat"><span>压力</span><div class="stat-bar danger"><div style="width:95%"></div></div></div>
+                            <div class="stat"><span>意外</span><div class="stat-bar danger"><div style="width:100%"></div></div></div>
+                        </div>
+                        <p class="role-desc">资源充沛，但导师要求极高，意外事件频发</p>
+                        <div class="role-difficulty">难度: ⭐⭐⭐⭐</div>
+                    </div>
+
+                    <!-- 中户散养组 -->
+                    <div class="role-card" data-role="medium">
+                        <div class="role-icon">🏢</div>
+                        <h3>中户散养组</h3>
+                        <div class="role-stats">
+                            <div class="stat"><span>经费</span><div class="stat-bar"><div style="width:60%"></div></div></div>
+                            <div class="stat"><span>培养位</span><div class="stat-bar"><div style="width:55%"></div></div></div>
+                            <div class="stat"><span>压力</span><div class="stat-bar"><div style="width:50%"></div></div></div>
+                            <div class="stat"><span>意外</span><div class="stat-bar"><div style="width:50%"></div></div></div>
+                        </div>
+                        <p class="role-desc">资源适中，压力适中，适合新手</p>
+                        <div class="role-difficulty">难度: ⭐⭐</div>
+                    </div>
+
+                    <!-- 小户放养组 -->
+                    <div class="role-card" data-role="small">
+                        <div class="role-icon">🏠</div>
+                        <h3>小户放养组</h3>
+                        <div class="role-stats">
+                            <div class="stat"><span>经费</span><div class="stat-bar"><div style="width:35%"></div></div></div>
+                            <div class="stat"><span>培养位</span><div class="stat-bar"><div style="width:40%"></div></div></div>
+                            <div class="stat"><span>压力</span><div class="stat-bar"><div style="width:30%"></div></div></div>
+                            <div class="stat"><span>意外</span><div class="stat-bar"><div style="width:25%"></div></div></div>
+                        </div>
+                        <p class="role-desc">经费紧张，但压力小，细胞容易污染</p>
+                        <div class="role-difficulty">难度: ⭐⭐⭐</div>
+                    </div>
+
+                    <!-- 穷困潦倒组 -->
+                    <div class="role-card" data-role="poor">
+                        <div class="role-icon">🏚️</div>
+                        <h3>穷困潦倒组</h3>
+                        <div class="role-stats">
+                            <div class="stat"><span>经费</span><div class="stat-bar"><div style="width:15%"></div></div></div>
+                            <div class="stat"><span>培养位</span><div class="stat-bar"><div style="width:20%"></div></div></div>
+                            <div class="stat"><span>压力</span><div class="stat-bar"><div style="width:20%"></div></div></div>
+                            <div class="stat"><span>意外</span><div class="stat-bar"><div style="width:10%"></div></div></div>
+                        </div>
+                        <p class="role-desc">一穷二白，极限生存挑战</p>
+                        <div class="role-difficulty">难度: ⭐⭐⭐⭐⭐</div>
+                    </div>
+                </div>
+
+                <button class="btn-primary btn-large" id="btn-confirm-role">确认选择</button>
+            </div>
+        </div>
+
+        <!-- ==================== 命运揭晓界面 ==================== -->
+        <div id="fate-screen" class="screen">
+            <div class="fate-container">
+                <div id="fate-dialogues">
+                    <!-- 台词会动态生成 -->
+                </div>
+                <button class="btn-fate-next" id="btn-fate-next">点击继续</button>
+                <button class="btn-primary btn-large hidden" id="btn-accept-fate">接受命运，开始游戏</button>
+            </div>
+        </div>
+
+        <!-- ==================== 细胞房主界面 ==================== -->
+        <div id="lab-screen" class="screen">
+            <!-- 顶部状态栏 -->
+            <header id="top-bar">
+                <div class="player-info">
+                    <span class="player-title" id="player-title">胞之者 ⭐</span>
+                    <span class="player-name" id="display-name">牛马研究员</span>
+                </div>
+                <div class="game-time-container">
+                    <div class="game-date-row">
+                        <span id="game-date">2024年1月1日</span>
+                        <span id="game-time" class="game-clock">00:00</span>
+                    </div>
+                    <div class="speed-controls">
+                        <button class="speed-btn" data-speed="1">1x</button>
+                        <button class="speed-btn active" data-speed="2">2x</button>
+                        <button class="speed-btn" data-speed="5">5x</button>
+                    </div>
+                </div>
+                <div class="resources">
+                    <div class="resource gold">
+                        <span class="icon">💰</span>
+                        <span id="player-gold">0</span>
+                    </div>
+                    <div class="resource exp">
+                        <span class="icon">⭐</span>
+                        <span id="player-exp">0</span>/<span id="exp-needed">100</span>
+                    </div>
+                </div>
+                <div class="top-actions">
+                    <button class="btn-icon" id="btn-music" aria-pressed="true" title="背景音乐">🎵</button>
+                    <button class="btn-icon" id="btn-settings">⚙️</button>
+                </div>
+            </header>
+
+            <!-- 活动事件显示栏 -->
+            <div id="active-events-bar">
+                <!-- 事件图标动态生成 -->
+            </div>
+
+            <!-- 细胞房场景 -->
+            <main id="lab-scene">
+                <!-- 背景场景 -->
+                <div id="lab-background">
+                    <!-- 培养箱区域 -->
+                    <div class="lab-area" id="area-incubator" data-area="incubator">
+                        <div class="area-icon">🧊</div>
+                        <div class="area-name">培养箱</div>
+                        <div class="area-badge" id="incubator-count">0</div>
+                    </div>
+
+                    <!-- 超净台区域 -->
+                    <div class="lab-area" id="area-workbench" data-area="workbench">
+                        <div class="area-icon">🔬</div>
+                        <div class="area-name">超净台</div>
+                    </div>
+
+                    <!-- 储藏室区域 -->
+                    <div class="lab-area" id="area-storage" data-area="storage">
+                        <div class="area-icon">📦</div>
+                        <div class="area-name">储藏室</div>
+                    </div>
+
+                    <!-- 办公区域 -->
+                    <div class="lab-area" id="area-office" data-area="office">
+                        <div class="area-icon">📋</div>
+                        <div class="area-name">办公区</div>
+                        <div class="area-badge task-badge" id="task-count">0</div>
+                    </div>
+
+                    <!-- NPC牛马 -->
+                    <div id="npc-container">
+                        <div id="npc-character">
+                            <div class="npc-sprite">🧑‍🔬</div>
+                            <div class="npc-dialogue" id="npc-dialogue"></div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- 底部导航 -->
+            <nav id="bottom-nav">
+                <button class="nav-btn" data-panel="incubator">
+                    <span class="nav-icon">🧊</span>
+                    <span>培养箱</span>
+                </button>
+                <button class="nav-btn" data-panel="workbench">
+                    <span class="nav-icon">🔬</span>
+                    <span>超净台</span>
+                </button>
+                <button class="nav-btn" data-panel="storage">
+                    <span class="nav-icon">📦</span>
+                    <span>储藏室</span>
+                </button>
+                <button class="nav-btn" data-panel="tasks">
+                    <span class="nav-icon">📋</span>
+                    <span>任务</span>
+                </button>
+                <button class="nav-btn" data-panel="shop">
+                    <span class="nav-icon">🛒</span>
+                    <span>商店</span>
+                </button>
+                <button class="nav-btn" data-panel="friends">
+                    <span class="nav-icon">👥</span>
+                    <span>好友</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- ==================== 破产界面 ==================== -->
+        <div id="bankruptcy-screen" class="screen">
+            <div class="bankruptcy-container">
+                <div class="bankruptcy-text">
+                    <h1>细胞都养不好</h1>
+                    <h2>申请退学吧</h2>
+                </div>
+                <div class="bankruptcy-stats">
+                    <p>存活天数: <span id="survive-days">0</span> 天</p>
+                    <p>最高等级: <span id="max-level">胞之者 ⭐</span></p>
+                    <p>培养细胞: <span id="total-cells">0</span> 个</p>
+                </div>
+                <div class="bankruptcy-actions">
+                    <button class="btn-primary" id="btn-restart">重新开始</button>
+                    <button class="btn-secondary" id="btn-reorganize">破产重组</button>
+                    <button class="btn-ghost" id="btn-back-menu">返回主菜单</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== 子界面面板 ==================== -->
+
+        <!-- 培养箱面板 -->
+        <div id="panel-incubator" class="sub-panel hidden">
+            <div class="panel-header">
+                <h2>🧊 CO2培养箱</h2>
+                <button class="btn-close" data-close="panel">✕</button>
+            </div>
+            <div class="panel-content">
+                <div id="incubator-grid" class="cell-grid">
+                    <!-- 培养槽位动态生成 -->
+                </div>
+            </div>
+            <button class="btn-back" data-close="panel">←</button>
+        </div>
+
+        <!-- 超净台面板 -->
+        <div id="panel-workbench" class="sub-panel hidden">
+            <div class="panel-header">
+                <h2>🔬 超净工作台</h2>
+                <button class="btn-close" data-close="panel">✕</button>
+            </div>
+            <div class="panel-content">
+                <div class="workbench-area">
+                    <div id="workbench-cell-slot" class="workbench-slot">
+                        <p>将细胞拖放到此处进行操作</p>
+                    </div>
+                    <div class="workbench-actions">
+                        <button class="action-btn" id="btn-action-passage" disabled>
+                            <span class="action-icon">🔀</span>
+                            <span>传代</span>
+                        </button>
+                        <button class="action-btn" id="btn-action-drug" disabled>
+                            <span class="action-icon">💊</span>
+                            <span>加药</span>
+                        </button>
+                        <button class="action-btn" id="btn-action-harvest" disabled>
+                            <span class="action-icon">✅</span>
+                            <span>收获</span>
+                        </button>
+                        <button class="action-btn" id="btn-action-freeze" disabled>
+                            <span class="action-icon">❄️</span>
+                            <span>冻存</span>
+                        </button>
+                        <button class="action-btn danger" id="btn-action-discard" disabled>
+                            <span class="action-icon">🗑️</span>
+                            <span>丢弃</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-back" data-close="panel">←</button>
+        </div>
+
+        <!-- 储藏室面板 -->
+        <div id="panel-storage" class="sub-panel hidden">
+            <div class="panel-header">
+                <h2>📦 储藏室</h2>
+                <button class="btn-close" data-close="panel">✕</button>
+            </div>
+            <div class="panel-content">
+                <div class="storage-tabs">
+                    <button class="storage-tab active" data-storage="items">物品</button>
+                    <button class="storage-tab" data-storage="frozen">冻存细胞</button>
+                </div>
+                <div id="storage-content">
+                    <!-- 内容动态生成 -->
+                </div>
+            </div>
+            <button class="btn-back" data-close="panel">←</button>
+        </div>
+
+        <!-- 任务面板 -->
+        <div id="panel-tasks" class="sub-panel hidden">
+            <div class="panel-header">
+                <h2>📋 任务中心</h2>
+                <button class="btn-close" data-close="panel">✕</button>
+            </div>
+            <div class="panel-content">
+                <div class="task-tabs">
+                    <button class="task-tab active" data-task-type="daily">日常任务</button>
+                    <button class="task-tab" data-task-type="project">课题任务</button>
+                </div>
+                <div id="task-list-container">
+                    <!-- 任务列表动态生成 -->
+                </div>
+                <button class="btn-primary" id="btn-get-task">接取新任务</button>
+            </div>
+            <button class="btn-back" data-close="panel">←</button>
+        </div>
+
+        <!-- 商店面板 -->
+        <div id="panel-shop" class="sub-panel hidden">
+            <div class="panel-header">
+                <h2>🛒 实验耗材商店</h2>
+                <button class="btn-close" data-close="panel">✕</button>
+            </div>
+            <div class="panel-content">
+                <div class="shop-tabs">
+                    <button class="shop-tab active" data-shop="medium">培养基</button>
+                    <button class="shop-tab" data-shop="serum">血清</button>
+                    <button class="shop-tab" data-shop="reagent">试剂</button>
+                    <button class="shop-tab" data-shop="riskControl">防污染</button>
+                    <button class="shop-tab" data-shop="addon">添加剂</button>
+                    <button class="shop-tab" data-shop="tools">道具</button>
+                </div>
+                <div id="shop-items-grid">
+                    <!-- 商品动态生成 -->
+                </div>
+            </div>
+            <button class="btn-back" data-close="panel">←</button>
+        </div>
+
+        <!-- 好友面板 -->
+        <div id="panel-friends" class="sub-panel hidden">
+            <div class="panel-header">
+                <h2>👥 好友</h2>
+                <button class="btn-close" data-close="panel">✕</button>
+            </div>
+            <div class="panel-content">
+                <div class="friends-search">
+                    <input type="text" placeholder="搜索好友..." id="friend-search">
+                    <button class="btn-small" id="btn-add-friend">添加</button>
+                </div>
+                <div id="friends-list">
+                    <p class="empty-hint">游客模式暂不支持好友功能</p>
+                </div>
+            </div>
+            <button class="btn-back" data-close="panel">←</button>
+        </div>
+
+        <!-- ==================== 通用模态框 ==================== -->
+        <div id="modal-overlay" class="hidden">
+            <div id="modal-box">
+                <div class="modal-header">
+                    <h3 id="modal-title">提示</h3>
+                    <button class="btn-close" id="modal-close">✕</button>
+                </div>
+                <div id="modal-body">
+                    <!-- 内容动态生成 -->
+                </div>
+                <div id="modal-footer">
+                    <!-- 按钮动态生成 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== 全局通知 ==================== -->
+        <div id="notification-container"></div>
+    </div>
+
+    <audio id="bgm-audio" preload="auto" loop>
+        <source src="assets/bgm.ogg" type="audio/ogg">
+        <source src="assets/bgm.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- 加载脚本 -->
+    <script src="js/config.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/cell.js"></script>
+    <script src="js/npc.js"></script>
+    <script src="js/incubator.js"></script>
+    <script src="js/task.js"></script>
+    <script src="js/event.js"></script>
+    <script src="js/shop.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
